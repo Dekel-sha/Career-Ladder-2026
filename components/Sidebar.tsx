@@ -13,7 +13,7 @@ import {
   Plus,
 } from "lucide-react";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import sidebarLogoAnimation from "../assets/placeholder-lottie";
+import sidebarLogoAnimation from "../assets/placeholder-lottie.ts";
 import { Button } from "./ui/button";
 import {
   TooltipProvider,
