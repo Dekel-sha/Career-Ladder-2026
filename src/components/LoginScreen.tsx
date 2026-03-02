@@ -11,7 +11,7 @@ import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import placeholderAnimation from "../assets/placeholder-lottie";
 
 // Images
-import step1Image from "figma:asset/55767ae0c7f4c520be1b5fd6b48abd4028c3fb34.png";
+import step1Image from "@/assets/login-visual.svg";
 
 // Using Step 1 image for all steps as per request
 const step2Image = step1Image;

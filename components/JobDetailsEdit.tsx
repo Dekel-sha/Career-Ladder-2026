@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
-import { format } from "date-fns@4.1.0";
+import { format } from "date-fns";
 import { WORK_TYPE_DB, WORK_TYPE_LABEL } from "../src/constants/workTypes";
 
 interface FormData {

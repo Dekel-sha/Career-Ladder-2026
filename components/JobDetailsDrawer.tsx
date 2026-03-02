@@ -13,7 +13,7 @@ import { Textarea } from "./ui/textarea";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "./ui/alert-dialog";
-import { format } from "date-fns@4.1.0";
+import { format } from "date-fns";
 import { toast } from "sonner@2.0.3";
 import { JobDetailsEdit } from "./JobDetailsEdit";
 import { WORK_TYPE_LABEL, isValidWorkType, type WorkTypeDb } from "../src/constants/workTypes";

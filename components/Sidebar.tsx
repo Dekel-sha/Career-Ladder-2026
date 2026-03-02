@@ -13,7 +13,7 @@ import {
   Plus,
 } from "lucide-react";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import sidebarLogoAnimation from "../src/assets/placeholder-lottie";
+import sidebarLogoAnimation from "@/assets/placeholder-lottie";
 import { Button } from "./ui/button";
 import {
   TooltipProvider,
@@ -21,7 +21,7 @@ import {
   TooltipContent,
 } from "./ui/tooltip";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip@1.1.8";
-import logoIcon from "../assets/7f76be97f60f0a42a3d35474d0bd32d8b3977494.png";
+import logoIcon from "@/assets/logo-icon.svg";
 import { motion } from "motion/react";
 
 interface LottieErrorBoundaryProps {
