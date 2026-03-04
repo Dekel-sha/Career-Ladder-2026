@@ -8,6 +8,7 @@ import {
   ReactNode,
 } from "react";
 import { JobDetailsDrawer } from "./JobDetailsDrawer";
+import { supabase } from "../src/lib/supabase";
 
 interface JobDrawerContextValue {
   open: (jobId: string) => void;
@@ -40,70 +41,59 @@ export function JobDrawerProvider({ children }: JobDrawerProviderProps) {
   const triggerElementRef = useRef<HTMLElement | null>(null);
   const drawerRef = useRef<HTMLDivElement | null>(null);
 
-  // Mock data for demonstration - replace with actual API call
   const fetchJobData = async (id: string) => {
     setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 300));
 
-    // Mock data - replace with actual API call
-    // Different data based on ID to demonstrate conditional sections
-    const mockDataById: Record<string, any> = {
-      "1": {
-        company: "Figma",
-        position: "Senior Product Designer",
-        status: "interview",
-        appliedDate: "Oct 15, 2024",
-        followUpDate: "Oct 30, 2024",
-        roleType: "Product Designer",
-        jobType: "Full-time",
-        workType: "remote",
-        location: "San Francisco, CA",
-        source: "LinkedIn",
-        jobUrl: "https://www.figma.com/careers",
-        priority: "high" as const,
-        requirements: "5+ years of experience in product design\nStrong portfolio demonstrating design systems work\nExperience with Figma and prototyping tools\nExcellent communication and collaboration skills\nBS/BA in Design, HCI, or related field",
-        coverLetter: "Dear Hiring Manager,\n\nI am excited to apply for the Senior Product Designer position at Figma. With over 6 years of experience in product design and a deep passion for creating intuitive user experiences, I believe I would be a great fit for your team.\n\nMy experience includes leading design system initiatives at my current company, which aligns perfectly with Figma's focus on collaborative design tools. I'm particularly drawn to Figma's mission of making design accessible to everyone.\n\nI look forward to discussing how my skills and experience can contribute to Figma's continued success.\n\nBest regards,\n[Your Name]",
-        notes: [
-          "Initial phone screen went well. Team seems very collaborative.",
-          "Design challenge due next week - focus on accessibility features.",
-        ],
-      },
-      "2": {
-        company: "Google",
-        position: "UX Designer",
-        status: "applied",
-        appliedDate: "Oct 22, 2024",
-        // No followUpDate
-        roleType: "UX Design",
-        // No jobType
-        workType: "hybrid",
-        location: "Mountain View, CA",
-        source: "Company Site",
-        // No jobUrl
-        // No priority
-        requirements: "3+ years UX design experience\nProficiency in Sketch, Figma, or Adobe XD\nStrong understanding of user-centered design principles\nExperience conducting user research",
-        // No coverLetter
-        notes: [],
-      },
-      "3": {
-        company: "Meta",
-        position: "Product Designer",
-        status: "follow-up",
-        // No appliedDate
-        followUpDate: "Nov 5, 2024",
-        // No roleType, jobType, workType, location
-        // No source or jobUrl
-        priority: "medium" as const,
-        // No requirements
-        coverLetter: "Dear Meta Team,\n\nI'm writing to express my interest in the Product Designer role. My background in social platform design makes me uniquely qualified for this position.\n\nThank you for your consideration.",
-        notes: ["Follow up scheduled for next week."],
-      },
-    };
+    const { data, error } = await supabase
+      .from("jobs")
+      .select(`
+        id,
+        company,
+        position_title,
+        status,
+        applied_date,
+        follow_up_date,
+        role,
+        job_type,
+        work_type,
+        location,
+        source,
+        job_url,
+        salary_range,
+        priority,
+        job_description,
+        cover_letter,
+        notes
+      `)
+      .eq("id", id)
+      .single();
 
-    const mockData = mockDataById[id] || mockDataById["1"];
+    if (error || !data) {
+      console.error("Failed to fetch job data:", error);
+      setIsLoading(false);
+      return;
+    }
 
-    setJobData(mockData);
+    setJobData({
+      id: data.id,
+      company: data.company,
+      position: data.position_title,
+      status: data.status,
+      appliedDate: data.applied_date,
+      followUpDate: data.follow_up_date,
+      roleType: data.role,
+      jobType: data.job_type,
+      workType: data.work_type,
+      location: data.location,
+      source: data.source,
+      jobUrl: data.job_url,
+      salaryRange: data.salary_range,
+      priority: data.priority?.toLowerCase() as "low" | "medium" | "high" | undefined,
+      requirements: data.job_description,
+      coverLetter: data.cover_letter,
+      notes: data.notes ? [data.notes] : [],
+    });
+
     setIsLoading(false);
   };
 
